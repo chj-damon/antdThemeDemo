@@ -1,0 +1,26 @@
+{
+  "private": true,
+  "author": "damon.chen <chj_0507_dz@sina.com>",
+  "scripts": {
+    "dev": "umi dev",
+    "build": "umi build",
+    "postinstall": "umi setup",
+    "setup": "umi setup",
+    "start": "npm run dev"
+  },
+  "dependencies": {
+    "@ant-design/pro-layout": "^7.14.0",
+    "antd": "^5.5.1",
+    "antd-style": "^3.2.1",
+    "axios": "^1.4.0",
+    "jotai": "^2.1.0",
+    "normalize.css": "^8.0.1",
+    "umi": "^4.0.69"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.33",
+    "@types/react-dom": "^18.0.11",
+    "@umijs/plugins": "^4.0.69",
+    "typescript": "^5.0.3"
+  }
+}
