@@ -9,7 +9,7 @@ import {
 } from "antd";
 import { ThemeMode, createStyles, useThemeMode } from "antd-style";
 import { useSetAtom } from "jotai";
-import { MouseEventHandler } from "react";
+import { useMemoizedFn } from "ahooks";
 
 const { Text } = Typography;
 
@@ -17,8 +17,8 @@ const useStyles = createStyles(({ token, css }) => ({
   container: {
     backgroundColor: token.colorBgLayout,
     borderRadius: token.borderRadiusLG,
-    width: '100vw',
-    height: '100vh',
+    width: "100vw",
+    height: "100vh",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
@@ -49,12 +49,18 @@ export default function HomePage() {
   const { themeMode, appearance, browserPrefers, setThemeMode } =
     useThemeMode();
 
-  const handle = (e: any) => {
+  const handle = useMemoizedFn((e: any) => {
+    const html = document.querySelector("html")!;
+
     const isAppearanceTransition =
       // @ts-ignore
       document.startViewTransition &&
       !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (!isAppearanceTransition) return;
+
+    if (!isAppearanceTransition) {
+      setThemeMode(themeMode === "light" ? "dark" : "light");
+      return;
+    }
 
     const [x, y] = [e.clientX, e.clientY];
     const endRadius = Math.hypot(
@@ -63,7 +69,8 @@ export default function HomePage() {
     );
 
     // @ts-expect-error: Transition API
-    const transition = document.startViewTransition(async () => {
+    const transition = document.startViewTransition(() => {
+      html.className = themeMode === "light" ? "dark" : "";
       setThemeMode(themeMode === "light" ? "dark" : "light");
     });
 
@@ -74,19 +81,19 @@ export default function HomePage() {
       ];
       document.documentElement.animate(
         {
-          clipPath: themeMode == "dark" ? [...clipPath].reverse() : clipPath,
+          clipPath: themeMode === "dark" ? clipPath : [...clipPath].reverse(),
         },
         {
           duration: 400,
           easing: "ease-out",
           pseudoElement:
-            themeMode == "dark"
-              ? "::view-transition-old(root)"
-              : "::view-transition-new(root)",
+            themeMode === "dark"
+              ? "::view-transition-new(root)"
+              : "::view-transition-old(root)",
         }
       );
     });
-  };
+  });
 
   return (
     <div className={styles.container}>
