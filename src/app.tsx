@@ -4,6 +4,9 @@ export function rootContainer(container: any) {
   return (
     <ThemeProvider
       defaultThemeMode="light"
+      customToken={{
+        redashGray: '#123456'
+      }}
       theme={(appearance) => {
         if (appearance === "dark") {
           return {
