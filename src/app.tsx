@@ -4,6 +4,11 @@ import { ThemeProvider } from "antd-style";
 export function rootContainer(container: any) {
   return (
     <ThemeProvider
+      getStaticInstance={(instances) => {
+        window.message = instances.message;
+        window.notification = instances.notification;
+        window.modal = instances.modal;
+      }}
       defaultThemeMode="light"
       customToken={{
         redashGray: "#123456",

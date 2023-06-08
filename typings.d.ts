@@ -1,5 +1,13 @@
 import 'umi/typings';
 
+declare global {
+  interface Window {
+    message: MessageInstance;
+    notification: NotificationInstance;
+    modal: ModalType;
+  }
+}
+
 interface NewToken {
   redashGray: string;
 }
