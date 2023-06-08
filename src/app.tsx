@@ -1,3 +1,4 @@
+import { App } from "antd";
 import { ThemeProvider } from "antd-style";
 
 export function rootContainer(container: any) {
@@ -5,7 +6,7 @@ export function rootContainer(container: any) {
     <ThemeProvider
       defaultThemeMode="light"
       customToken={{
-        redashGray: '#123456'
+        redashGray: "#123456",
       }}
       theme={(appearance) => {
         if (appearance === "dark") {
@@ -37,7 +38,7 @@ export function rootContainer(container: any) {
         return {};
       }}
     >
-      {container}
+      <App>{container}</App>
     </ThemeProvider>
   );
 }
